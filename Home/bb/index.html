@@ -4,6 +4,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>我爱你</title>
     <link type="text/css" rel="stylesheet" href="assets/default.css">
     <script type="text/javascript" src="assets/jquery.min.js"></script>
@@ -16,16 +17,100 @@
     <script type="text/javascript" src="assets/functions.js" charset="utf-8"></script>
     <script type="text/javascript" src="assets/love.js" charset="utf-8"></script>
     <style type="text/css">
-        <!--
-        .STYLE1 {
-            color: #666666
+        /* 移动端适配样式 */
+        @media screen and (max-width: 768px) {
+            body {
+                font-size: 14px;
+                overflow-x: hidden;
+            }
+            
+            #wrap {
+                width: 100vw;
+                height: 100vh;
+                margin-top: 0;
+                position: relative;
+            }
+            
+            #text {
+                width: 80%;
+                height: auto;
+                left: 10%;
+                top: 20px;
+                position: absolute;
+                z-index: 10;
+            }
+            
+            #code {
+                font-size: 12px;
+                line-height: 1.4;
+                padding: 10px;
+                background: rgba(255, 255, 255, 0.8);
+                border-radius: 8px;
+            }
+            
+            #clock-box {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: 80px;
+                font-size: 18px;
+                text-align: center;
+                background: rgba(255, 255, 255, 0.8);
+                padding: 10px;
+                border-radius: 8px;
+                width: 80%;
+            }
+            
+            #clock-box a {
+                font-size: 18px;
+            }
+            
+            #clock {
+                margin-left: 0;
+            }
+            
+            #clock .digit {
+                font-size: 32px;
+            }
+            
+            #canvas {
+                width: 100vw;
+                height: 100vh;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+            
+            .say {
+                margin-left: 2px;
+                display: block;
+                margin-bottom: 5px;
+            }
+            
+            .space {
+                margin-right: 0;
+            }
         }
-        -->
+        
+        @media screen and (max-width: 480px) {
+            #code {
+                font-size: 11px;
+            }
+            
+            #clock-box {
+                font-size: 16px;
+                bottom: 60px;
+            }
+            
+            #clock .digit {
+                font-size: 24px;
+            }
+        }
     </style>
 </head>
 
 <body>
-    <audio autoplay="autopaly">
+    <audio autoplay="autoplay" loop>
         <source src="bg.mp3" type="audio/mp3" />
     </audio>
     <div id="main">
@@ -35,7 +120,7 @@
         <div id="wrap">
             <div id="text">
                 <div id="code">
-                    <font color="blue"> <span class="say">亲爱的巧平，我爱你</span><br>
+                    <font color="yellow"> <span class="say">亲爱的巧平，我爱你</span><br>
                         <span class="say"> </span><br>
                         <span class="say"> 我知道我不会甜言蜜语，</span><br>
                         <span class="say"> </span><br>
@@ -62,7 +147,7 @@
             </div>
 
             <div id="clock-box"> <span class="STYLE1"></span>
-                <font color="#FF4500">亲爱的巧平，我爱你</font> <span class="STYLE1">已经是……</span>
+                <font color="#FF1000">亲爱的巧平，我爱你</font> <span class="STYLE1">已经是……</span>
                 <div id="clock"></div>
             </div>
             <canvas id="canvas" width="1100" height="680"></canvas>
@@ -79,15 +164,20 @@
                 return false;
             }
 
-            var width = canvas.width();
-            var height = canvas.height();
+            // 动态设置canvas尺寸
+            var isMobile = window.innerWidth <= 768;
+            var width = isMobile ? window.innerWidth : canvas.width();
+            var height = isMobile ? window.innerHeight : canvas.height();
+            
             canvas.attr("width", width);
             canvas.attr("height", height);
+            
+            // 移动端调整参数
             var opts = {
                 seed: {
                     x: width / 2 - 20,
                     color: "rgb(190, 26, 37)",
-                    scale: 2
+                    scale: isMobile ? 1.5 : 2
                 },
                 branch: [
                     [535, 680, 570, 250, 500, 200, 30, 100, [
@@ -108,15 +198,22 @@
                     ]]
                 ],
                 bloom: {
-                    num: 700,
-                    width: 1080,
-                    height: 650,
+                    num: isMobile ? 400 : 700,
+                    width: width,
+                    height: height,
                 },
                 footer: {
-                    width: 1200,
+                    width: width,
                     height: 5,
                     speed: 10,
                 }
+            }
+            
+            // 移动端调整树的位置
+            if (isMobile) {
+                opts.branch[0][0] = width / 2;
+                opts.branch[0][1] = height - 50;
+                opts.seed.x = width / 2 - 20;
             }
 
             var tree = new Tree(canvas[0], width, height, opts);
@@ -182,9 +279,6 @@
 
                 // 会有闪烁不得意这样做, (＞﹏＜)
                 canvas.parent().css("background", "url(" + tree.toDataURL('image/png') + ")");
-                canvas.css("background", "#ffe");
-                $await(Jscex.Async.sleep(300));
-                canvas.css("background", "none");
             }));
 
             var jumpAnimate = eval(Jscex.compile("async", function () {
