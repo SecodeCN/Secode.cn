@@ -5,7 +5,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>我爱你</title>
+    <title>巧映泉心</title>
     <link type="text/css" rel="stylesheet" href="assets/default.css">
     <script type="text/javascript" src="assets/jquery.min.js"></script>
     <script type="text/javascript" src="assets/jscex.min.js"></script>
@@ -19,7 +19,15 @@
     <style type="text/css">
         body {
             font-size: 20px;
-            overflow-x: hidden;
+            overflow: hidden;
+            /* 禁止用户选择文本 */
+            user-select: none;
+            /* Safari */
+            -webkit-user-select: none;
+            /* Firefox */
+            -moz-user-select: none;
+            /* IE/Edge */
+            -ms-user-select: none;
         }
 
         #wrap {
@@ -137,10 +145,20 @@
             canvas.attr("width", width);
             canvas.attr("height", height);
 
+            if (width < 680) {
+                width = 680;
+            }
+
+            var bloomWidth = width - 20;
+            if (bloomWidth < 650) {
+                bloomWidth = 650;
+            }
+            var bloomHeight = 650 + (height - 680) * 2; //height - 30;
+
             // 移动端调整参数
             var opts = {
                 seed: {
-                    x: width / 2 - 20,
+                    x: window.innerWidth / 2 - 20,
                     color: "rgb(190, 26, 37)",
                     scale: 3
                 },
@@ -164,8 +182,8 @@
                 ],
                 bloom: {
                     num: 700,
-                    width: width - 20,
-                    height: height - 30,
+                    width: bloomWidth,
+                    height: bloomHeight,
                 },
                 footer: {
                     width: width + 100,
@@ -174,9 +192,10 @@
                 }
             }
 
+            var dx = width / 2 - 535;
+            var dy = height - 30 - 680;
+
             function modifyBranch(branch) {
-                var dx = width / 2 - 535;
-                var dy = height - 30 - 680;
                 for (var i = 0; i < branch.length;) {
                     if (Array.isArray(branch[i])) {
                         modifyBranch(branch[i]);
@@ -235,6 +254,8 @@
                     foot.draw();
                     $await(Jscex.Async.sleep(10));
                 }
+                canvas.attr("width", width);
+                canvas.attr("height", height);
             }));
 
             var growAnimate = eval(Jscex.compile("async", function () {
@@ -252,7 +273,7 @@
             }));
 
             var moveAnimate = eval(Jscex.compile("async", function () {
-                var moveX = 600;
+                var moveX = 680;
                 if (width < moveX) {
                     moveX = width;
                 }
