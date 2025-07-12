@@ -20,59 +20,30 @@
         /* 移动端适配样式 */
         @media screen and (max-width: 768px) {
             body {
-                font-size: 14px;
+                font-size: 20px;
                 overflow-x: hidden;
             }
-            
+
             #wrap {
                 width: 100vw;
                 height: 100vh;
                 margin-top: 0;
                 position: relative;
             }
-            
+
             #text {
                 width: 80%;
                 height: auto;
                 left: 10%;
-                top: 20px;
+                top: 10%;
                 position: absolute;
                 z-index: 10;
             }
-            
+
             #code {
-                font-size: 12px;
-                line-height: 1.4;
-                padding: 10px;
-                background: rgba(255, 255, 255, 0.8);
-                border-radius: 8px;
+                font-size: 20px;
             }
-            
-            #clock-box {
-                position: absolute;
-                left: 50%;
-                transform: translateX(-50%);
-                bottom: 80px;
-                font-size: 18px;
-                text-align: center;
-                background: rgba(255, 255, 255, 0.8);
-                padding: 10px;
-                border-radius: 8px;
-                width: 80%;
-            }
-            
-            #clock-box a {
-                font-size: 18px;
-            }
-            
-            #clock {
-                margin-left: 0;
-            }
-            
-            #clock .digit {
-                font-size: 32px;
-            }
-            
+
             #canvas {
                 width: 100vw;
                 height: 100vh;
@@ -80,30 +51,13 @@
                 top: 0;
                 left: 0;
             }
-            
-            .say {
-                margin-left: 2px;
-                display: block;
-                margin-bottom: 5px;
-            }
-            
-            .space {
-                margin-right: 0;
-            }
-        }
-        
-        @media screen and (max-width: 480px) {
-            #code {
-                font-size: 11px;
-            }
-            
+
             #clock-box {
-                font-size: 16px;
-                bottom: 60px;
-            }
-            
-            #clock .digit {
-                font-size: 24px;
+                position: absolute;
+                bottom: 50px;
+                height: 200px;
+                width: 100%;
+                top: auto;
             }
         }
     </style>
@@ -140,7 +94,9 @@
                         <span class="say"> </span><br>
                         <span class="say"> 第二个是再生再世和你在一起，</span><br>
                         <span class="say"> </span><br>
-                        <span class="say">第三个是永生永世和你不分离 </span><br>
+                        <span class="say">第三个是永生永世和你不分离 </span>
+                        <br>
+                        <br>
                         <span class="say"><span class="space"></span> -- 爱你的小泉</span>
                     </font>
                 </div>
@@ -168,16 +124,16 @@
             var isMobile = window.innerWidth <= 768;
             var width = isMobile ? window.innerWidth : canvas.width();
             var height = isMobile ? window.innerHeight : canvas.height();
-            
+
             canvas.attr("width", width);
             canvas.attr("height", height);
-            
+
             // 移动端调整参数
             var opts = {
                 seed: {
                     x: width / 2 - 20,
                     color: "rgb(190, 26, 37)",
-                    scale: isMobile ? 1.5 : 2
+                    scale: isMobile ? 3 : 2
                 },
                 branch: [
                     [535, 680, 570, 250, 500, 200, 30, 100, [
@@ -199,22 +155,39 @@
                 ],
                 bloom: {
                     num: isMobile ? 400 : 700,
-                    width: width,
-                    height: height,
+                    width: width - 20,
+                    height: height - 30,
                 },
                 footer: {
-                    width: width,
-                    height: 5,
+                    width: width + 100,
+                    height: isMobile ? 30 : 5,
                     speed: 10,
                 }
             }
-            
+
+            function modifyBranch(branch) {
+                for (var i = 0; i < branch.length;) {
+                    if (Array.isArray(branch[i])) {
+                        modifyBranch(branch[i]);
+                        i += 1;
+                    } else {
+                        branch[i] += width / 2 - 535;
+                        branch[i + 1] += height - 50 - 680;
+                        branch[i + 2] += width / 2 - 535;
+                        branch[i + 3] += height - 50 - 680;
+                        branch[i + 4] += width / 2 - 535;
+                        branch[i + 5] += height - 50 - 680;
+                        i += 8;
+                    }
+                }
+            }
+
             // 移动端调整树的位置
             if (isMobile) {
-                opts.branch[0][0] = width / 2;
-                opts.branch[0][1] = height - 50;
-                opts.seed.x = width / 2 - 20;
+                modifyBranch(opts.branch);
             }
+
+            console.log(opts);
 
             var tree = new Tree(canvas[0], width, height, opts);
             var seed = tree.seed;
@@ -248,7 +221,7 @@
                     $await(Jscex.Async.sleep(10));
                 }
                 while (seed.canMove()) {
-                    seed.move(0, 2);
+                    seed.move(0, isMobile ? 5 : 2);
                     foot.draw();
                     $await(Jscex.Async.sleep(10));
                 }
@@ -269,13 +242,24 @@
             }));
 
             var moveAnimate = eval(Jscex.compile("async", function () {
-                tree.snapshot("p1", 240, 0, 610, 680);
-                while (tree.move("p1", 500, 0)) {
+                if (isMobile) {
+                    tree.snapshot("p1", 0, 0, width, height);
+                    while (tree.move("p1", width / 2 - 50, 0)) {
+                        foot.draw();
+                        $await(Jscex.Async.sleep(10));
+                    }
                     foot.draw();
-                    $await(Jscex.Async.sleep(10));
+                    tree.snapshot("p2", width / 2 - 5, 0, width, height);
+                } else {
+                    tree.snapshot("p1", 240, 0, 610, 680);
+                    while (tree.move("p1", 500, 0)) {
+                        foot.draw();
+                        $await(Jscex.Async.sleep(10));
+                    }
+                    foot.draw();
+                    tree.snapshot("p2", 500, 0, 610, 680);
                 }
-                foot.draw();
-                tree.snapshot("p2", 500, 0, 610, 680);
+
 
                 // 会有闪烁不得意这样做, (＞﹏＜)
                 canvas.parent().css("background", "url(" + tree.toDataURL('image/png') + ")");
