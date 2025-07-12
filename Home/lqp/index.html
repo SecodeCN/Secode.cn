@@ -829,7 +829,17 @@
 
             // "确定"按钮点击事件
             const confirmBtn = document.getElementById('confirm-btn');
+
+            var confirmClickCount = 0;
+
             confirmBtn.addEventListener('click', () => {
+                confirmClickCount += 1;
+
+                if (confirmClickCount > 1) {
+                    location.href = './bb/index.html';
+                    return;
+                }
+
                 // 隐藏确认弹窗
                 const modal = document.getElementById('confirmation-modal');
                 modal.classList.add('opacity-0', 'pointer-events-none');
