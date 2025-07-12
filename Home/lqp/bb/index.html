@@ -17,47 +17,66 @@
     <script type="text/javascript" src="assets/functions.js" charset="utf-8"></script>
     <script type="text/javascript" src="assets/love.js" charset="utf-8"></script>
     <style type="text/css">
+        body {
+            font-size: 20px;
+            overflow-x: hidden;
+        }
+
+        #wrap {
+            width: 100vw;
+            height: 100vh;
+            margin-top: 0;
+            position: relative;
+        }
+
+        #text {
+            width: 90%;
+            height: auto;
+            left: 5%;
+            top: 5%;
+            position: absolute;
+            z-index: 10;
+        }
+
+        #code {
+            font-size: 30px;
+            line-height: 1.4;
+        }
+
+        #canvas {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        #clock-box {
+            position: absolute;
+            bottom: 50px;
+            height: auto;
+            width: 100%;
+            top: auto;
+            font-size: 40px;
+        }
+
+        #clock .digit {
+            font-size: 60px;
+        }
+
+
         /* 移动端适配样式 */
         @media screen and (max-width: 768px) {
-            body {
-                font-size: 20px;
-                overflow-x: hidden;
-            }
-
-            #wrap {
-                width: 100vw;
-                height: 100vh;
-                margin-top: 0;
-                position: relative;
-            }
-
-            #text {
-                width: 80%;
-                height: auto;
-                left: 10%;
-                top: 10%;
-                position: absolute;
-                z-index: 10;
-            }
-
             #code {
-                font-size: 20px;
-            }
-
-            #canvas {
-                width: 100vw;
-                height: 100vh;
-                position: absolute;
-                top: 0;
-                left: 0;
+                font-size: 16px;
             }
 
             #clock-box {
-                position: absolute;
-                bottom: 50px;
-                height: 200px;
-                width: 100%;
-                top: auto;
+                font-size: 16px;
+            }
+
+            #clock .digit {
+                font-size: 30px;
             }
         }
     </style>
@@ -74,40 +93,27 @@
         <div id="wrap">
             <div id="text">
                 <div id="code">
-                    <font color="yellow"> 
+                    <font color="yellow">
                         <span class="say">亲爱的巧平：</span><br>
-                        <span class="say"> </span><br>
                         <span class="say"> 我爱你！</span><br>
-                        <span class="say"> </span><br>
                         <span class="say"> 我总说不好那些缠绵的情话，却想把每一个关于你的瞬间都酿成生活里的甜。</span><br>
-                        <span class="say"> </span><br>
                         <span class="say"> 2025年2月25日，第一次遇见你时，风里好像都带着心跳的回声；</span><br>
-                        <span class="say"> </span><br>
                         <span class="say"> 5月20日第一个情人节，餐桌两端相视而笑的瞬间，比任何装饰都更像心动的注脚；</span><br>
-                        <span class="say"> </span><br>
                         <span class="say"> 5月31日的端午节，餐桌旁父母的笑声里，藏着我们悄悄靠近的温暖；</span><br>
-                        <span class="say"> </span><br>
                         <span class="say"> 6月2日你第一次来我家，玄关处留下的鞋印，像给我的心盖了枚温柔的邮戳；</span><br>
-                        <span class="say"> </span><br>
                         <span class="say"> 6月21日你主动来找我，电话铃响时，我数着秒针跑向门口的样子，大概很傻吧；</span><br>
-                        <span class="say"> </span><br>
                         <span class="say"> 6月28日那晚，大学城外的风裹着星光，电动车后座你的温度，比晚风更让人沉醉；</span><br>
-                        <span class="say"> </span><br>
                         <span class="say"> 6月29日同床而眠的夜晚，连呼吸都想轻轻的，怕惊扰了这份安稳；</span><br>
-                        <span class="say"> </span><br>
                         <span class="say"> 今天，7月12日，我们终于牵住了彼此的手！</span><br>
-                        <span class="say"> </span><br>
                         <span class="say"> 原来爱不是堆砌漂亮的句子，是把这些细碎的日子串起来，变成只属于我们的故事。</span><br>
-                        <span class="say"> </span><br>
                         <span class="say"> 往后的日子，还想和你一起写更多 "第一次"。</span><br>
-                        <span class="say"> </span><br>
                         <span class="say"><span class="space"></span> -- 爱你的小泉</span>
                     </font>
                 </div>
             </div>
 
             <div id="clock-box"> <span class="STYLE1"></span>
-                <font color="#FF1000">亲爱的巧平，我爱你</font> <span class="STYLE1">已经是……</span>
+                <font color="#FF1000">亲爱的巧平，我爱你,</font> <span class="STYLE1">已经是:</span>
                 <div id="clock"></div>
             </div>
             <canvas id="canvas" width="1100" height="680"></canvas>
@@ -125,9 +131,8 @@
             }
 
             // 动态设置canvas尺寸
-            var isMobile = window.innerWidth <= 768;
-            var width = isMobile ? window.innerWidth : canvas.width();
-            var height = isMobile ? window.innerHeight : canvas.height();
+            var width = window.innerWidth;  // 1100
+            var height = window.innerHeight;  // 680
 
             canvas.attr("width", width);
             canvas.attr("height", height);
@@ -137,7 +142,7 @@
                 seed: {
                     x: width / 2 - 20,
                     color: "rgb(190, 26, 37)",
-                    scale: isMobile ? 3 : 2
+                    scale: 3
                 },
                 branch: [
                     [535, 680, 570, 250, 500, 200, 30, 100, [
@@ -158,13 +163,13 @@
                     ]]
                 ],
                 bloom: {
-                    num: isMobile ? 400 : 700,
+                    num: 700,
                     width: width - 20,
                     height: height - 30,
                 },
                 footer: {
                     width: width + 100,
-                    height: isMobile ? 30 : 5,
+                    height: 30,
                     speed: 10,
                 }
             }
@@ -189,11 +194,10 @@
             }
 
             // 移动端调整树的位置
-            if (isMobile) {
-                modifyBranch(opts.branch);
-            }
+            modifyBranch(opts.branch);
+            opts.branch[0][0] = width / 2 - 20;
+            opts.branch[0][1] = height - 30;
 
-            console.log(opts);
 
             var tree = new Tree(canvas[0], width, height, opts);
             var seed = tree.seed;
@@ -227,7 +231,7 @@
                     $await(Jscex.Async.sleep(10));
                 }
                 while (seed.canMove()) {
-                    seed.move(0, isMobile ? 5 : 2);
+                    seed.move(0, 5);
                     foot.draw();
                     $await(Jscex.Async.sleep(10));
                 }
@@ -248,26 +252,18 @@
             }));
 
             var moveAnimate = eval(Jscex.compile("async", function () {
-                if (isMobile) {
-                    tree.snapshot("p1", 0, 0, width, height);
-                    while (tree.move("p1", width / 2 - 50, 0)) {
-                        foot.draw();
-                        $await(Jscex.Async.sleep(10));
-                    }
-                    foot.draw();
-                    tree.snapshot("p2", width / 2 - 5, 0, width, height);
-                } else {
-                    tree.snapshot("p1", 240, 0, 610, 680);
-                    while (tree.move("p1", 500, 0)) {
-                        foot.draw();
-                        $await(Jscex.Async.sleep(10));
-                    }
-                    foot.draw();
-                    tree.snapshot("p2", 500, 0, 610, 680);
+                var moveX = 600;
+                if (width < moveX) {
+                    moveX = width;
                 }
+                tree.snapshot("p1", 0, 0, width, height);
+                while (tree.move("p1", moveX, 0)) {
+                    foot.draw();
+                    $await(Jscex.Async.sleep(5));
+                }
+                foot.draw();
+                tree.snapshot("p2", moveX, 0, width, height);
 
-
-                // 会有闪烁不得意这样做, (＞﹏＜)
                 canvas.parent().css("background", "url(" + tree.toDataURL('image/png') + ")");
             }));
 
@@ -277,13 +273,13 @@
                     tree.ctx.clearRect(0, 0, width, height);
                     tree.jump();
                     foot.draw();
-                    $await(Jscex.Async.sleep(25));
+                    $await(Jscex.Async.sleep(10));
                 }
             }));
 
             var textAnimate = eval(Jscex.compile("async", function () {
                 var together = new Date();
-                together.setFullYear(2025, 7, 12); 			//时间年月日
+                together.setFullYear(2025, 6, 12); 			//时间年月日 , 注意月份从0开始 , 6是7月
                 together.setHours(18);						//小时	
                 together.setMinutes(0);					//分钟
                 together.setSeconds(0);					//秒前一位
@@ -293,7 +289,7 @@
                 $("#clock-box").fadeIn(500);
                 while (true) {
                     timeElapse(together);
-                    $await(Jscex.Async.sleep(1000));
+                    $await(Jscex.Async.sleep(500));
                 }
             }));
 
