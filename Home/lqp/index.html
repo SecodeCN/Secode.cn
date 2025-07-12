@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>巧平，我的心动告白</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        love: {
+                            50: '#FFE6EA',
+                            100: '#FFCCD5',
+                            200: '#FF99AD',
+                            300: '#FF6684',
+                            400: '#FF335C',
+                            500: '#FF0033',
+                            600: '#CC0029',
+                            700: '#99001F',
+                            800: '#660014',
+                            900: '#33000A',
+                        }
+                    },
+                    fontFamily: {
+                        romantic: ['Dancing Script', 'cursive'],
+                        inter: ['Inter', 'sans-serif']
+                    },
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite',
+                        'heartbeat': 'heartbeat 1.5s ease-in-out infinite',
+                        'fall': 'fall 5s linear forwards',
+                        'fadeIn': 'fadeIn 1.5s ease-in forwards',
+                        'slideUp': 'slideUp 1s ease-out forwards',
+                        'bounceIn': 'bounceIn 0.6s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards',
+                        'grow': 'grow 1s ease-out forwards',
+                        'rotate': 'rotate 8s linear infinite',
+                        'bloom': 'bloom 2s ease-out forwards',
+                        'sparkle': 'sparkle 1.5s ease-in-out infinite',
+                        'shine': 'shine 2s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        heartbeat: {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '14%': { transform: 'scale(1.2)' },
+                            '28%': { transform: 'scale(1)' },
+                            '42%': { transform: 'scale(1.2)' },
+                            '70%': { transform: 'scale(1)' }
+                        },
+                        fall: {
+                            '0%': { transform: 'translateY(-10vh) rotate(0deg)', opacity: 1 },
+                            '100%': { transform: 'translateY(100vh) rotate(360deg)', opacity: 0 }
+                        },
+                        fadeIn: {
+                            '0%': { opacity: 0 },
+                            '100%': { opacity: 1 }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: 0 },
+                            '100%': { transform: 'translateY(0)', opacity: 1 }
+                        },
+                        bounceIn: {
+                            '0%': { transform: 'scale(0.3)', opacity: 0 },
+                            '20%': { transform: 'scale(1.1)' },
+                            '40%': { transform: 'scale(0.9)' },
+                            '60%': { transform: 'scale(1.03)' },
+                            '80%': { transform: 'scale(0.97)' },
+                            '100%': { transform: 'scale(1)', opacity: 1 }
+                        },
+                        grow: {
+                            '0%': { transform: 'scale(0.5)', opacity: 0 },
+                            '100%': { transform: 'scale(1)', opacity: 1 }
+                        },
+                        rotate: {
+                            '0%': { transform: 'rotate(0deg)' },
+                            '100%': { transform: 'rotate(360deg)' }
+                        },
+                        bloom: {
+                            '0%': { transform: 'scale(0.2) rotate(0deg)', opacity: 0 },
+                            '100%': { transform: 'scale(1) rotate(0deg)', opacity: 1 }
+                        },
+                        sparkle: {
+                            '0%, 100%': { opacity: 0.8 },
+                            '50%': { opacity: 1, transform: 'scale(1.1)' }
+                        },
+                        shine: {
+                            '0%, 100%': { boxShadow: '0 0 5px rgba(255, 255, 255, 0.7)' },
+                            '50%': { boxShadow: '0 0 20px rgba(255, 255, 255, 0.9)' }
+                        },
+                        glow: {
+                            '0%, 100%': { textShadow: '0 0 5px rgba(255, 255, 255, 0.7)' },
+                            '50%': { textShadow: '0 0 20px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 0, 51, 0.7)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            }
+            .text-shadow-lg {
+                text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            }
+            .bg-gradient-romantic {
+                background: linear-gradient(135deg, #FFC0CB 0%, #FF69B4 50%, #FF1493 100%);
+            }
+            .bg-glass {
+                background: rgba(255, 255, 255, 0.25);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.18);
+            }
+            .heart {
+                position: absolute;
+                width: 20px;
+                height: 20px;
+                background-color: #FF0033;
+                transform: rotate(45deg);
+                animation: fall linear forwards;
+            }
+            .heart:before, .heart:after {
+                content: '';
+                width: 20px;
+                height: 20px;
+                background-color: #FF0033;
+                border-radius: 50%;
+                position: absolute;
+            }
+            .heart:before {
+                top: -10px;
+                left: 0;
+            }
+            .heart:after {
+                top: 0;
+                left: -10px;
+            }
+            .flower-petal {
+                position: absolute;
+                width: 10px;
+                height: 10px;
+                background: pink;
+                border-radius: 150% 0 150% 0;
+                animation: fall linear forwards;
+            }
+            .rose-shadow {
+                filter: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
+            }
+            .music-wave {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 2px;
+                width: 20px;
+                height: 20px;
+            }
+            .music-wave span {
+                width: 2px;
+                height: 100%;
+                background-color: white;
+                border-radius: 2px;
+                animation: wave 1s ease-in-out infinite;
+            }
+            @keyframes wave {
+                0%, 100% { transform: scaleY(0.3) }
+                50% { transform: scaleY(1) }
+            }
+            .music-wave span:nth-child(2) { animation-delay: 0.1s }
+            .music-wave span:nth-child(3) { animation-delay: 0.2s }
+            .music-wave span:nth-child(4) { animation-delay: 0.3s }
+            .music-wave span:nth-child(5) { animation-delay: 0.4s }
+            
+            .rose-petal {
+                position: absolute;
+                border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+                transform-origin: bottom center;
+                opacity: 0;
+                animation: bloom 1.5s ease-out forwards;
+                background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), transparent 70%);
+            }
+            
+            .rose-petal-1 {
+                width: 60px;
+                height: 60px;
+                background-color: #FF0033;
+                bottom: 10px;
+                left: 50%;
+                transform: translateX(-50%) rotate(0deg);
+                animation-delay: 0.1s;
+            }
+            
+            .rose-petal-2 {
+                width: 70px;
+                height: 70px;
+                background-color: #FF335C;
+                bottom: 5px;
+                left: 50%;
+                transform: translateX(-50%) rotate(45deg);
+                animation-delay: 0.2s;
+            }
+            
+            .rose-petal-3 {
+                width: 80px;
+                height: 80px;
+                background-color: #FF6684;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%) rotate(90deg);
+                animation-delay: 0.3s;
+            }
+            
+            .rose-petal-4 {
+                width: 90px;
+                height: 90px;
+                background-color: #FF99AD;
+                bottom: -5px;
+                left: 50%;
+                transform: translateX(-50%) rotate(135deg);
+                animation-delay: 0.4s;
+            }
+            
+            .rose-petal-5 {
+                width: 100px;
+                height: 100px;
+                background-color: #FFB6C1;
+                bottom: -10px;
+                left: 50%;
+                transform: translateX(-50%) rotate(180deg);
+                animation-delay: 0.5s;
+            }
+            
+            .rose-center {
+                position: absolute;
+                width: 30px;
+                height: 30px;
+                background: radial-gradient(circle, #FFEE58, #FFCC00);
+                border-radius: 50%;
+                bottom: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+                opacity: 0;
+                animation: bloom 1.5s ease-out forwards, heartbeat 1.5s ease-in-out infinite;
+                animation-delay: 0.6s;
+                z-index: 10;
+                box-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
+            }
+            
+            .rose-stem {
+                position: absolute;
+                width: 6px;
+                height: 120px;
+                background: linear-gradient(to right, #1B5E20, #2E7D32, #1B5E20);
+                bottom: -120px;
+                left: 50%;
+                transform: translateX(-50%);
+                border-radius: 3px;
+                opacity: 0;
+                animation: fadeIn 1s ease-out forwards;
+                animation-delay: 0.8s;
+            }
+            
+            .rose-leaf {
+                position: absolute;
+                background: linear-gradient(to right, #228B22, #32CD32);
+                border-radius: 75% 0 75% 0;
+                opacity: 0;
+                animation: fadeIn 1s ease-out forwards;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            }
+            
+            .rose-leaf-1 {
+                width: 30px;
+                height: 18px;
+                bottom: -80px;
+                left: 50%;
+                transform: translateX(-50%) rotate(20deg);
+                animation-delay: 1s;
+            }
+            
+            .rose-leaf-2 {
+                width: 25px;
+                height: 15px;
+                bottom: -40px;
+                left: 50%;
+                transform: translateX(-50%) rotate(-20deg);
+                animation-delay: 1.2s;
+            }
+            
+            .love-icon {
+                position: relative;
+                display: inline-block;
+                animation: sparkle 1.5s ease-in-out infinite;
+            }
+            
+            .love-icon::after {
+                content: '';
+                position: absolute;
+                top: -5px;
+                left: -5px;
+                right: -5px;
+                bottom: -5px;
+                border-radius: 50%;
+                background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+                animation: shine 2s ease-in-out infinite;
+            }
+            
+            .future-icon {
+                position: relative;
+                display: inline-block;
+                animation: float 3s ease-in-out infinite;
+            }
+            
+            .future-icon::after {
+                content: '';
+                position: absolute;
+                top: -5px;
+                left: -5px;
+                right: -5px;
+                bottom: -5px;
+                border-radius: 50%;
+                background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+                animation: rotate 8s linear infinite;
+            }
+        }
+    </style>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Inter:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="min-h-screen overflow-hidden bg-gradient-to-br from-pink-50 to-red-100">
+    <!-- 花瓣和爱心飘落容器 -->
+    <div id="petals-container" class="fixed inset-0 pointer-events-none z-10"></div>
+
+    <!-- 背景音乐控制 -->
+    <div class="fixed top-4 right-4 z-30 bg-love-500/80 hover:bg-love-500 text-white p-3 rounded-full shadow-lg transition-all duration-300 flex items-center cursor-pointer"
+        id="music-toggle">
+        <i class="fa fa-music mr-2"></i>
+        <div class="music-wave">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- 主内容容器 -->
+    <div class="relative min-h-screen flex flex-col items-center justify-center p-4 z-20">
+        <!-- 顶部装饰 -->
+        <div class="absolute top-4 left-0 right-0 flex justify-center">
+            <div class="text-love-500 text-3xl md:text-4xl animate-float">
+                <div class="love-icon inline-block">
+                    <i class="fa fa-heart"></i>
+                </div>
+                <span class="mx-6 font-romantic font-bold text-love-600 animate-glow">爱</span>
+                <div class="love-icon inline-block">
+                    <i class="fa fa-heart"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- 主要内容卡片 -->
+        <div class="bg-glass rounded-3xl p-6 md:p-10 max-w-2xl w-full shadow-2xl animate-fadeIn"
+            style="animation-delay: 0.3s;">
+            <!-- 标题 -->
+            <h1
+                class="text-[clamp(2rem,5vw,3.5rem)] font-romantic font-bold text-center text-love-600 mb-8 animate-bounceIn text-shadow-lg">
+                我的心动告白
+            </h1>
+
+            <!-- 情话容器 -->
+            <div id="love-message"
+                class="text-[clamp(1.2rem,3vw,1.8rem)] font-romantic text-center text-love-700 mb-10 animate-slideUp"
+                style="animation-delay: 0.6s;">
+                加载中...
+            </div>
+
+            <!-- 玫瑰动画容器 -->
+            <div class="flex justify-center mb-10 animate-float" style="animation-delay: 0.9s;">
+                <div class="relative w-40 h-40 md:w-52 md:h-52">
+                    <div class="absolute inset-0 bg-love-100 rounded-full shadow-lg animate-heartbeat"></div>
+                    <div id="rose-container" class="relative z-10 w-full h-full flex items-center justify-center">
+                        <!-- 写实玫瑰 -->
+                        <div class="relative w-full h-full">
+                            <div class="rose-petal rose-petal-1"></div>
+                            <div class="rose-petal rose-petal-2"></div>
+                            <div class="rose-petal rose-petal-3"></div>
+                            <div class="rose-petal rose-petal-4"></div>
+                            <div class="rose-petal rose-petal-5"></div>
+                            <div class="rose-center"></div>
+                            <div class="rose-stem"></div>
+                            <div class="rose-leaf rose-leaf-1"></div>
+                            <div class="rose-leaf rose-leaf-2"></div>
+
+                            <!-- 玫瑰露珠效果 -->
+                            <div class="absolute w-3 h-3 bg-white/70 rounded-full top-1/4 left-1/3 transform -translate-x-1/2 -translate-y-1/2 blur-sm animate-float"
+                                style="animation-delay: 0.5s;"></div>
+                            <div class="absolute w-2 h-2 bg-white/70 rounded-full top-1/3 right-1/3 transform -translate-x-1/2 -translate-y-1/2 blur-sm animate-float"
+                                style="animation-delay: 1s;"></div>
+
+                            <img src="we.png" alt="we"
+                                class="w-full h-full object-contain p-4 rounded-full rose-shadow animate-grow">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 求交往文本 -->
+            <div class="text-[clamp(1.5rem,4vw,2.2rem)] font-romantic font-bold text-center text-love-600 mb-8 animate-slideUp"
+                style="animation-delay: 1.2s;">
+                巧平，你愿意做我的恋人吗？
+            </div>
+
+            <!-- 按钮区域 -->
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mt-8 animate-slideUp"
+                style="animation-delay: 1.5s;">
+                <button id="yes-btn"
+                    class="bg-love-500 hover:bg-love-600 text-white font-bold py-4 px-8 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center justify-center">
+                    <i class="fa fa-heart mr-2"></i> 我愿意
+                </button>
+                <button id="no-btn"
+                    class="bg-white hover:bg-gray-100 text-love-500 font-bold py-4 px-8 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center justify-center">
+                    <i class="fa fa-times mr-2"></i> 再考虑
+                </button>
+            </div>
+        </div>
+
+        <!-- 底部装饰 -->
+        <div class="absolute bottom-4 left-0 right-0 flex justify-center">
+            <div class="text-love-500 text-3xl md:text-4xl animate-float">
+                <div class="future-icon inline-block">
+                    <i class="fa fa-star"></i>
+                </div>
+                <span class="mx-6 font-romantic font-bold text-love-600 animate-glow">未来</span>
+                <div class="future-icon inline-block">
+                    <i class="fa fa-star"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 确认弹窗 -->
+    <div id="confirmation-modal"
+        class="fixed inset-0 flex items-center justify-center bg-black/70 z-50 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 transform scale-95 transition-transform duration-300">
+            <h2 class="text-2xl font-bold text-love-600 mb-4 text-center">我们的故事</h2>
+            <p class="text-gray-700 mb-6 text-center">我希望从现在开始，能一直牵着你的手，一起看遍世间美景，一起经历生活的酸甜苦辣。</p>
+            <div class="flex justify-center">
+                <button id="confirm-btn"
+                    class="bg-love-500 hover:bg-love-600 text-white font-bold py-3 px-6 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300">
+                    开启我们的故事
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 背景音乐控制
+        const bgMusic = document.getElementById('bg-music');
+        const musicToggle = document.getElementById('music-toggle');
+        let isMusicPlaying = false;
+
+        // 初始化音乐控制
+        function initMusic() {
+            // 点击控制音乐播放/暂停
+            musicToggle.addEventListener('click', () => {
+                if (isMusicPlaying) {
+                    bgMusic.pause();
+                    musicToggle.innerHTML = '<i class="fa fa-pause mr-2"></i>';
+                } else {
+                    bgMusic.play().catch(e => {
+                        console.log('自动播放失败:', e);
+                        // 提示用户点击播放
+                        alert('由于浏览器限制，需要点击按钮播放音乐');
+                    });
+                    musicToggle.innerHTML = '<i class="fa fa-music mr-2"></i><div class="music-wave"><span></span><span></span><span></span><span></span><span></span></div>';
+                }
+                isMusicPlaying = !isMusicPlaying;
+            });
+
+            // 页面交互后尝试播放音乐
+            document.addEventListener('click', () => {
+                if (!isMusicPlaying && !bgMusic.paused) {
+                    isMusicPlaying = true;
+                    musicToggle.innerHTML = '<i class="fa fa-music mr-2"></i><div class="music-wave"><span></span><span></span><span></span><span></span><span></span></div>';
+                }
+            }, { once: true });
+        }
+
+        // 求交往情话列表
+        const loveMessages = [
+            "从见到你的第一眼起，我的心就像被丘比特之箭射中，无法自拔地喜欢你。",
+            "每一天最期待的就是见到你，你的笑容让我的世界变得明亮。",
+            "我喜欢你，不仅仅是因为你的外表，更是因为你那善良的内心和独特的个性。",
+            "希望我的出现能给你的生活带来更多的快乐和惊喜，就像你给我带来的一样。",
+            "你是我生活中的阳光，是我每天前进的动力，我想一直陪伴在你身边。",
+            "想和你一起走过四季，看春天的花，夏天的雨，秋天的叶，冬天的雪。",
+            "你的存在让我明白了什么是心动，什么是思念，我不想错过这份感觉。",
+            "在茫茫人海中遇到你，是我最大的幸运，我希望这份幸运能一直延续下去。",
+            "我知道爱情需要时间来培养，但我已经迫不及待地想和你一起创造属于我们的回忆。",
+            "你愿意给我一个机会，让我用一生的时间来爱你吗？",
+            "你像一颗星星，点亮了我的整片夜空，让我的世界不再黑暗。",
+            "每次和你聊天，都像是在翻开一本永远读不完的精彩书籍。",
+            "你的声音如同春风拂面，轻轻拨动着我的心弦。",
+            "和你在一起的时光，总是过得特别快，仿佛时间也在为我们的相遇而欢呼。",
+            "你是我生命中最美的意外，让我原本平淡的生活变得五彩斑斓。",
+            "我愿意做你永远的避风港，为你遮风挡雨，守护你一生一世。",
+            "你的一个眼神，就能让我忘记所有烦恼，只记得你的温柔。",
+            "我想成为你生活中的一部分，无论是快乐还是悲伤，我都想与你分享。",
+            "爱情就像一杯香浓的咖啡，需要慢慢品味，而我想和你一起品尝这份甜蜜。",
+            "你是我这辈子最想珍惜的人，希望你能给我这个机会。",
+            "如果可以，我想把每一天都变成我们的纪念日，纪念我们相爱的每一刻。",
+            "你的笑容是我见过最美的风景，比任何画卷都要动人。",
+            "我愿意用我的全部来换取你的幸福，只要你开心，我就满足了。",
+            "和你在一起，我才知道什么是真正的幸福，我希望这种幸福能持续到永远。",
+            "你是我生命中的灵感源泉，让我有勇气追求更好的自己。",
+            "我想和你一起看遍世间所有的美景，留下属于我们的足迹。",
+            "你的存在让我对未来充满了期待，我想和你一起创造一个美好的未来。",
+            "我知道我不是完美的人，但我会为了你努力变成更好的人。",
+            "爱情不需要太多的言语，只需要一个眼神，我就能感受到你对我的心意。",
+            "你是我心中的女神，让我忍不住想要靠近你，了解你。",
+            "我愿意用我的一生来等待你的回应，只要你能给我一个机会。",
+            "和你在一起的每一刻，都让我感到无比的安心和满足。",
+            "你是我生命中最重要的人，我希望你能一直陪伴在我身边。",
+            "我想和你一起经历生活中的点点滴滴，无论是欢笑还是泪水。",
+            "你的温柔如同春风化雨，滋润着我的心田。",
+            "我愿意做你永远的依靠，无论何时何地，我都会在你身边。",
+            "你是我生命中的阳光，照亮了我前行的道路。",
+            "我希望我们的爱情像一棵树，慢慢成长，越来越坚固。",
+            "你的每一个微笑，都能让我的心情变得格外舒畅。",
+            "我想和你一起度过每一个节日，让每一个日子都变得有意义。",
+            "你是我生命中最美好的礼物，我会好好珍惜这份礼物。",
+            "我愿意用我的一生来爱你，无论是现在还是将来，我的心都不会改变。",
+            "和你在一起，我才知道什么是真正的爱情，我希望我们能一直相爱下去。",
+            "你是我生命中的唯一，我会用我的全部来守护你。",
+            "我想和你一起走过人生的每一个阶段，从青春到白发。",
+            "你的存在让我对爱情有了新的认识，我想和你一起探索爱情的奥秘。",
+            "我愿意做你永远的伴侣，与你携手走过一生。"
+        ];
+
+        // 备用情话列表 - 当用户点击"再考虑"时显示
+        const backupLoveMessages = [
+            "我知道爱情不能强求，但我还是忍不住想告诉你，我真的很喜欢你。",
+            "也许我不是最完美的人，但我会用我的全部真心去爱你，呵护你。",
+            "我愿意用我的一生来证明，我对你的爱是真诚的，是永恒的。",
+            "你的一个微笑，就能让我开心一整天；你的一句话，就能让我铭记于心。",
+            "我知道我可能不是你最初的选择，但我希望我能成为你最后的归宿。",
+            "无论你是否接受我的感情，我都会一直在这里，默默地守护着你。",
+            "爱情可能不需要太多的言语，只需要一颗真诚的心，我希望你能感受到我的真心。",
+            "我愿意和你一起面对生活中的所有挑战，无论是风雨还是晴天，我都会在你身边。",
+            "也许我们的故事还没有开始，但我已经迫不及待地想和你一起书写属于我们的未来。",
+            "我不想错过你，不想留下遗憾，所以我鼓起勇气再次向你表达我的心意。",
+            "我知道等待是漫长的，但为了你，我愿意等待，直到你接受我的爱。",
+            "你就像一颗璀璨的星星，即使在最黑暗的夜晚，也能照亮我的心。",
+            "我会用我的行动来证明我对你的爱，而不仅仅是说说而已。",
+            "无论你走到哪里，我的心都会跟着你，因为你已经占据了我的整个心。",
+            "我希望有一天，你能感受到我对你的爱，就像我感受到你的温暖一样。",
+            "爱情有时候需要一点耐心，我愿意耐心地等待，直到你愿意给我一个机会。",
+            "你是我生命中最美的风景，即使只是远远地看着你，我也感到满足。",
+            "我会努力让自己变得更好，因为我想成为配得上你的人。",
+            "无论未来如何，我都不会后悔爱上你，因为你是我生命中最美好的回忆。",
+            "我知道感情需要时间来培养，我愿意用时间来证明我对你的爱是真实的。",
+            "你是我生活中的动力，让我有勇气面对一切困难。",
+            "我会一直在你身边，无论是快乐还是悲伤，我都会与你同在。",
+            "爱情就像一朵花，需要细心呵护才能绽放，我愿意用我的爱来浇灌这朵花。",
+            "你是我生命中的奇迹，让我相信缘分的存在。",
+            "我愿意为你做任何事情，只要能看到你幸福的笑容。",
+            "无论你是否爱我，我都会永远爱你，这是我对你的承诺。",
+            "我希望我们能成为彼此的依靠，一起走过人生的每一个阶段。",
+            "你是我生命中的阳光，即使在最寒冷的冬天，也能温暖我的心。",
+            "我会用我的一生来珍惜你，爱护你，保护你。",
+            "无论你身在何处，我的心都会永远属于你。",
+            "我知道爱情不是一时的冲动，而是长久的陪伴，我愿意陪伴你一生一世。",
+            "你是我生命中的唯一，没有人能取代你的位置。",
+            "我会用我的全部热情来爱你，让你感受到我的真心。",
+            "无论未来如何，我都希望你能知道，我会一直在你身边。",
+            "你是我生命中的宝藏，我会好好珍藏这份宝藏。",
+            "我愿意和你一起创造美好的回忆，让这些回忆成为我们爱情的见证。",
+            "无论你遇到什么困难，我都会与你一起面对，共同克服。",
+            "你是我生命中的天使，带给我无尽的快乐和幸福。",
+            "我会用我的一生来守护你，不让你受到任何伤害。",
+            "无论你是否接受我的爱，我都会永远祝福你，希望你能幸福快乐。",
+            "你是我生命中的灵感，让我有勇气追求自己的梦想。",
+            "我愿意和你一起分享生活中的喜怒哀乐，成为你最亲密的朋友。",
+            "无论你走到哪里，我都会在你身后支持你，鼓励你。",
+            "你是我生命中的阳光雨露，让我的生活充满生机和活力。",
+            "我会用我的一生来爱你，这份爱不会因为时间和距离而改变。"
+        ];
+
+        // 记录用户点击"再考虑"的次数
+        let noButtonClickCount = 0;
+
+        // 获取随机情话
+        function getRandomMessage() {
+            const randomIndex = Math.floor(Math.random() * loveMessages.length);
+            return loveMessages[randomIndex];
+        }
+
+        // 获取备用情话
+        function getBackupMessage() {
+            // 如果点击次数小于备用情话数量，按顺序显示
+            if (noButtonClickCount < backupLoveMessages.length) {
+                return backupLoveMessages[noButtonClickCount];
+            }
+            // 否则随机显示
+            const randomIndex = Math.floor(Math.random() * backupLoveMessages.length);
+            return backupLoveMessages[randomIndex];
+        }
+
+        // 创建花瓣
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.className = 'flower-petal';
+
+            // 随机样式 - 以玫瑰红为主
+            const colors = ['#FF0033', '#FF335C', '#FF6684', '#FF99AD', '#FFB6C1'];
+            const size = Math.random() * 10 + 10;
+            const color = colors[Math.floor(Math.random() * colors.length)];
+
+            petal.style.width = `${size}px`;
+            petal.style.height = `${size}px`;
+            petal.style.background = color;
+            petal.style.left = `${Math.random() * 100}vw`;
+            petal.style.opacity = Math.random() * 0.5 + 0.5;
+            petal.style.animationDuration = `${Math.random() * 5 + 5}s`;
+            petal.style.animationDelay = `${Math.random() * 5}s`;
+
+            document.getElementById('petals-container').appendChild(petal);
+
+            // 动画结束后移除花瓣
+            setTimeout(() => {
+                petal.remove();
+            }, 10000);
+        }
+
+        // 创建爱心
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+
+            // 随机样式
+            const size = Math.random() * 10 + 10;
+            const opacity = Math.random() * 0.5 + 0.5;
+
+            heart.style.width = `${size}px`;
+            heart.style.height = `${size}px`;
+            heart.style.left = `${Math.random() * 100}vw`;
+            heart.style.opacity = opacity;
+            heart.style.animationDuration = `${Math.random() * 5 + 5}s`;
+            heart.style.animationDelay = `${Math.random() * 5}s`;
+
+            // 随机颜色渐变
+            const colors = ['#FF0033', '#FF335C', '#FF6684'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            heart.style.backgroundColor = color;
+
+            const before = heart.querySelector(':before');
+            const after = heart.querySelector(':after');
+            before.style.backgroundColor = color;
+            after.style.backgroundColor = color;
+
+            document.getElementById('petals-container').appendChild(heart);
+
+            // 动画结束后移除爱心
+            setTimeout(() => {
+                heart.remove();
+            }, 10000);
+        }
+
+        // 初始化飘落效果
+        function initFallingEffect() {
+            // 初始创建一些花瓣和爱心
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    if (Math.random() > 0.7) {
+                        createHeart();
+                    } else {
+                        createPetal();
+                    }
+                }, i * 200);
+            }
+
+            // 定时创建新的花瓣和爱心
+            setInterval(() => {
+                if (Math.random() > 0.7) {
+                    createHeart();
+                } else {
+                    createPetal();
+                }
+            }, 500);
+        }
+
+        // 显示情话
+        function displayMessage(message) {
+            const messageElement = document.getElementById('love-message');
+
+            // 先淡出当前消息
+            messageElement.style.opacity = '0';
+
+            setTimeout(() => {
+                // 更换消息内容
+                messageElement.textContent = message;
+
+                // 添加打字效果
+                let i = 0;
+                messageElement.textContent = '';
+
+                const typingEffect = setInterval(() => {
+                    if (i < message.length) {
+                        messageElement.textContent += message.charAt(i);
+                        i++;
+                    } else {
+                        clearInterval(typingEffect);
+                    }
+                }, 50);
+
+                // 淡入新消息
+                setTimeout(() => {
+                    messageElement.style.opacity = '1';
+                }, 100);
+            }, 300);
+        }
+
+        // 按钮交互
+        document.addEventListener('DOMContentLoaded', () => {
+            // 初始化音乐控制
+            initMusic();
+
+            // 初始化飘落效果
+            initFallingEffect();
+
+            // 显示随机情话
+            displayMessage(getRandomMessage());
+
+            // 给"再考虑"按钮添加调皮效果
+            const noBtn = document.getElementById('no-btn');
+            noBtn.addEventListener('mouseover', () => {
+                // 随机位置
+                const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+                const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+
+                // 确保按钮不会超出屏幕
+                x = Math.max(20, Math.min(x, window.innerWidth - noBtn.offsetWidth - 20));
+                y = Math.max(20, Math.min(y, window.innerHeight - noBtn.offsetHeight - 20));
+
+                // 应用位置
+                noBtn.style.position = 'fixed';
+                noBtn.style.left = `${x}px`;
+                noBtn.style.top = `${y}px`;
+            });
+
+            // "再考虑"按钮点击事件
+            noBtn.addEventListener('click', () => {
+                // 增加点击次数
+                noButtonClickCount++;
+
+                // 显示新的情话
+                displayMessage(getBackupMessage());
+
+                // 创建一些爱心，增加浪漫氛围
+                for (let i = 0; i < 10; i++) {
+                    setTimeout(() => {
+                        createHeart();
+                    }, i * 100);
+                }
+
+                // 改变按钮文字，增加趣味性
+                if (noButtonClickCount === 1) {
+                    noBtn.innerHTML = '<i class="fa fa-times mr-2"></i> 再考虑一下';
+                } else if (noButtonClickCount === 2) {
+                    noBtn.innerHTML = '<i class="fa fa-times mr-2"></i> 真的要再想想';
+                } else if (noButtonClickCount === 3) {
+                    noBtn.innerHTML = '<i class="fa fa-times mr-2"></i> 别着急拒绝嘛';
+                } else if (noButtonClickCount === 4) {
+                    noBtn.innerHTML = '<i class="fa fa-times mr-2"></i> 我再努力一下';
+                } else if (noButtonClickCount >= 5) {
+                    noBtn.innerHTML = '<i class="fa fa-times mr-2"></i> 我不会放弃的';
+                }
+            });
+
+            // "我愿意"按钮点击事件
+            const yesBtn = document.getElementById('yes-btn');
+            yesBtn.addEventListener('click', () => {
+                // 显示确认弹窗
+                const modal = document.getElementById('confirmation-modal');
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modal.querySelector('div').classList.remove('scale-95');
+                modal.querySelector('div').classList.add('scale-100');
+
+                // 创建更多爱心和花瓣
+                for (let i = 0; i < 50; i++) {
+                    setTimeout(() => {
+                        createHeart();
+                    }, i * 50);
+                }
+
+                // 玫瑰动画加速
+                const petals = document.querySelectorAll('.rose-petal');
+                petals.forEach(petal => {
+                    petal.style.animationDuration = '0.5s';
+                });
+
+                // 让"爱"和"未来"图标更闪耀
+                const loveIcons = document.querySelectorAll('.love-icon');
+                const futureIcons = document.querySelectorAll('.future-icon');
+
+                loveIcons.forEach(icon => {
+                    icon.style.animationDuration = '0.8s';
+                });
+
+                futureIcons.forEach(icon => {
+                    icon.style.animationDuration = '1.5s';
+                });
+            });
+
+            // "确定"按钮点击事件
+            const confirmBtn = document.getElementById('confirm-btn');
+            confirmBtn.addEventListener('click', () => {
+                // 隐藏确认弹窗
+                const modal = document.getElementById('confirmation-modal');
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                modal.querySelector('div').classList.remove('scale-100');
+                modal.querySelector('div').classList.add('scale-95');
+
+                // 改变背景为庆祝模式
+                document.body.classList.add('bg-gradient-romantic');
+
+                // 清空并重新创建更多花瓣和爱心
+                const petalsContainer = document.getElementById('petals-container');
+                petalsContainer.innerHTML = '';
+
+                for (let i = 0; i < 100; i++) {
+                    setTimeout(() => {
+                        if (Math.random() > 0.5) {
+                            createHeart();
+                        } else {
+                            createPetal();
+                        }
+                    }, i * 100);
+                }
+
+                // 显示庆祝消息
+                const messageElement = document.getElementById('love-message');
+                messageElement.textContent = '我们开始恋爱吧！';
+                messageElement.classList.add('text-love-50', 'text-shadow');
+
+                // 改变标题
+                document.querySelector('h1').textContent = '我们恋爱啦！';
+
+                // 隐藏拒绝按钮
+                noBtn.style.display = 'none';
+
+                // 改变接受按钮文字
+                yesBtn.innerHTML = '<i class="fa fa-heart mr-2"></i> 永远爱你';
+
+                // 音乐播放
+                if (!isMusicPlaying) {
+                    bgMusic.play().catch(e => console.log('播放失败:', e));
+                    isMusicPlaying = true;
+                    musicToggle.innerHTML = '<i class="fa fa-music mr-2"></i><div class="music-wave"><span></span><span></span><span></span><span></span><span></span></div>';
+                }
+
+                // 让"爱"和"未来"图标更加闪耀
+                const loveIcons = document.querySelectorAll('.love-icon');
+                const futureIcons = document.querySelectorAll('.future-icon');
+
+                loveIcons.forEach(icon => {
+                    icon.style.animationDuration = '0.5s';
+                    icon.style.animationDelay = '0s';
+                });
+
+                futureIcons.forEach(icon => {
+                    icon.style.animationDuration = '1s';
+                    icon.style.animationDelay = '0s';
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
