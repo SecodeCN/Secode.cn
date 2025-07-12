@@ -74,29 +74,33 @@
         <div id="wrap">
             <div id="text">
                 <div id="code">
-                    <font color="yellow"> <span class="say">亲爱的巧平，我爱你</span><br>
+                    <font color="yellow"> 
+                        <span class="say">亲爱的巧平：</span><br>
                         <span class="say"> </span><br>
-                        <span class="say"> 我知道我不会甜言蜜语，</span><br>
+                        <span class="say"> 我爱你！</span><br>
                         <span class="say"> </span><br>
-                        <span class="say"> 但是我会用行动证明一切</span><br>
+                        <span class="say"> 我总说不好那些缠绵的情话，却想把每一个关于你的瞬间都酿成生活里的甜。</span><br>
                         <span class="say"> </span><br>
-                        <span class="say">你说我罗嗦，</span><br> <br>
-                        <span class="say"> 有些东西因为越在乎所以越怕失去</span><br>
+                        <span class="say"> 2025年2月25日，第一次遇见你时，风里好像都带着心跳的回声；</span><br>
                         <span class="say"> </span><br>
-                        <span class="say">因为我太爱你了，所以我害怕失去你</span><br>
+                        <span class="say"> 5月20日第一个情人节，餐桌两端相视而笑的瞬间，比任何装饰都更像心动的注脚；</span><br>
                         <span class="say"> </span><br>
-                        <span class="say">因为我太爱你了，所以我对你总罗嗦</span><br>
+                        <span class="say"> 5月31日的端午节，餐桌旁父母的笑声里，藏着我们悄悄靠近的温暖；</span><br>
                         <span class="say"> </span><br>
-                        <span class="say">希望可以执子之手，与子偕老</span><br>
+                        <span class="say"> 6月2日你第一次来我家，玄关处留下的鞋印，像给我的心盖了枚温柔的邮戳；</span><br>
                         <span class="say"> </span><br>
-                        <span class="say">如果上天让我许三个愿望，</span><br><br>
-                        <span class="say">第一个是今生今世和你在一起， </span><br>
+                        <span class="say"> 6月21日你主动来找我，电话铃响时，我数着秒针跑向门口的样子，大概很傻吧；</span><br>
                         <span class="say"> </span><br>
-                        <span class="say"> 第二个是再生再世和你在一起，</span><br>
+                        <span class="say"> 6月28日那晚，大学城外的风裹着星光，电动车后座你的温度，比晚风更让人沉醉；</span><br>
                         <span class="say"> </span><br>
-                        <span class="say">第三个是永生永世和你不分离 </span>
-                        <br>
-                        <br>
+                        <span class="say"> 6月29日同床而眠的夜晚，连呼吸都想轻轻的，怕惊扰了这份安稳；</span><br>
+                        <span class="say"> </span><br>
+                        <span class="say"> 今天，7月12日，我们终于牵住了彼此的手！</span><br>
+                        <span class="say"> </span><br>
+                        <span class="say"> 原来爱不是堆砌漂亮的句子，是把这些细碎的日子串起来，变成只属于我们的故事。</span><br>
+                        <span class="say"> </span><br>
+                        <span class="say"> 往后的日子，还想和你一起写更多 "第一次"。</span><br>
+                        <span class="say"> </span><br>
                         <span class="say"><span class="space"></span> -- 爱你的小泉</span>
                     </font>
                 </div>
@@ -166,17 +170,19 @@
             }
 
             function modifyBranch(branch) {
+                var dx = width / 2 - 535;
+                var dy = height - 30 - 680;
                 for (var i = 0; i < branch.length;) {
                     if (Array.isArray(branch[i])) {
                         modifyBranch(branch[i]);
                         i += 1;
                     } else {
-                        branch[i] += width / 2 - 535;
-                        branch[i + 1] += height - 50 - 680;
-                        branch[i + 2] += width / 2 - 535;
-                        branch[i + 3] += height - 50 - 680;
-                        branch[i + 4] += width / 2 - 535;
-                        branch[i + 5] += height - 50 - 680;
+                        branch[i] += dx;
+                        branch[i + 1] += dy;
+                        branch[i + 2] += dx;
+                        branch[i + 3] += dy;
+                        branch[i + 4] += dx;
+                        branch[i + 5] += dy;
                         i += 8;
                     }
                 }
@@ -277,7 +283,7 @@
 
             var textAnimate = eval(Jscex.compile("async", function () {
                 var together = new Date();
-                together.setFullYear(2025, 2, 25); 			//时间年月日
+                together.setFullYear(2025, 7, 12); 			//时间年月日
                 together.setHours(18);						//小时	
                 together.setMinutes(0);					//分钟
                 together.setSeconds(0);					//秒前一位
