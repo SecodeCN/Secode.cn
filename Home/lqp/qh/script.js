@@ -29,6 +29,63 @@ function typeLoop() {
 }
 typeLoop();
 
+// 时间轴数据与渲染（可在此修改或从后端获取）
+let timelineData = [
+  { title: '第一次相遇', text: '那天的光都在你眼里。', date: '2022-05-06' },
+  { title: '第一次牵手', text: '掌心的温度让我确定。', date: '2022-06-12' },
+  { title: '第一次旅行', text: '世界很大，和你在一起刚刚好。', date: '2023-03-21' },
+  { title: '第一次争吵', text: '我们学会了更好地拥抱彼此。', date: '2023-08-02' },
+  { title: '一起的目标', text: '把未来的小家布置成温柔的模样。', date: '2024-02-14' },
+  { title: '此刻', text: '我准备好迈向永远。', date: new Date().toISOString().slice(0,10) }
+];
+
+function renderTimeline(){
+  const wrap = document.getElementById('timelineSteps');
+  if(!wrap) return;
+  const sorted = [...timelineData].sort((a,b)=> new Date(a.date) - new Date(b.date));
+  wrap.innerHTML = sorted.map((item, idx) => {
+    const isLatest = idx === sorted.length - 1;
+    return `<div class=\"step${isLatest?' latest':''}\" data-date=\"${item.date}\">`+
+      `<div class=\"date-badge\">${formatDate(item.date)}</div>`+
+      `<span>${item.title}</span><p>${item.text}</p></div>`;
+  }).join('');
+}
+renderTimeline();
+function formatDate(d){
+  if(!d) return '';
+  const [y,m,day] = d.split('-');
+  return `${y}.${m}.${day}`;
+}
+
+// 滚动出现动画
+function observeTimeline(){
+  const steps = document.querySelectorAll('.timeline .step');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.style.transition = '600ms ease';
+        e.target.style.transform = 'translateY(0)';
+        e.target.style.opacity = '1';
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  steps.forEach(s => {
+    s.style.opacity = '0';
+    s.style.transform = 'translateY(18px)';
+    io.observe(s);
+  });
+}
+observeTimeline();
+
+// 动态添加事件函数（调用后自动重新渲染并高亮最新）
+function addTimelineItem(title, text, date = new Date().toISOString().slice(0,10)) {
+  timelineData.push({ title, text, date });
+  renderTimeline();
+  observeTimeline();
+}
+// 示例（可删除）：addTimelineItem('期待的未来', '我们的小家会充满花香与清晨的光。');
+
 // 背景心形/粒子动画
 const canvas = document.getElementById('bg');
 const ctx = canvas.getContext('2d');
