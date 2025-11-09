@@ -180,7 +180,7 @@ const closeModal = document.getElementById('closeModal');
 yesBtn.addEventListener('click', () => {
   feedback.textContent = pickYesResponse();
   launchConfetti();
-  setTimeout(()=> modal.classList.remove('hidden'), 1000);
+  setTimeout(()=> { modal.classList.remove('hidden'); startModalHearts(); }, 900);
 });
 
 thinkBtn.addEventListener('click', () => {
@@ -189,8 +189,13 @@ thinkBtn.addEventListener('click', () => {
   wiggle(thinkBtn);
 });
 
+// 关闭弹窗反向动画
 closeModal.addEventListener('click', () => {
-  modal.classList.add('hidden');
+  modal.classList.add('closing');
+  modal.querySelector('.modal-content').addEventListener('animationend', () => {
+    modal.classList.add('hidden');
+    modal.classList.remove('closing');
+  }, { once:true });
 });
 
 // 简易彩带
@@ -273,6 +278,41 @@ function applyTimeTheme(){
 applyTimeTheme();
 // 每小时重新评估（节省资源：设置间隔）
 setInterval(applyTimeTheme, 60 * 60 * 1000);
+
+// Modal 心形动态效果
+function startModalHearts(){
+  const container = document.getElementById('modalHearts');
+  if(!container) return;
+  container.innerHTML='';
+  const total = 28;
+  for(let i=0;i<total;i++){
+    const span = document.createElement('span');
+    span.className='modal-heart';
+    span.textContent = Math.random()<0.5 ? '❤' : '💖';
+    const x = 12 + Math.random()*76; // 百分比区域
+    const delay = i * 0.12 + Math.random()*0.4;
+    const size = 16 + Math.random()*18;
+    span.style.left = x+'%';
+    span.style.bottom = '-10px';
+    span.style.fontSize = size+'px';
+    span.style.animationDelay = delay+'s';
+    container.appendChild(span);
+  }
+  // 音频响应标记
+  container.classList.add('audio-react');
+}
+
+// 计算恋爱天数（示例起始日期，可修改为实际）
+const relationshipStartDate = new Date('2025-07-12');
+function updateDaysTogether(){
+  const span = document.getElementById('daysTogether');
+  if(!span) return;
+  const today = new Date();
+  const diffMs = today.setHours(0,0,0,0) - relationshipStartDate.setHours(0,0,0,0);
+  const days = Math.max(1, Math.floor(diffMs / (1000*60*60*24))+1);
+  span.textContent = days;
+}
+updateDaysTogether();
 
 // --- 点击反馈文案：两个各 50 句 ---
 const yesResponses = [
