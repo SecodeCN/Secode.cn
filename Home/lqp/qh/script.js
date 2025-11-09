@@ -141,25 +141,26 @@ function wiggle(el) {
   ], { duration: 480, easing:'ease-in-out' });
 }
 
-// 音乐控制
-const musicBtn = document.getElementById('musicBtn');
+// 音乐控制增强 (整个面板作为按钮)
+const audioControl = document.getElementById('musicPanel');
 const bgm = document.getElementById('bgm');
 let playing = false;
-musicBtn.addEventListener('click', async () => {
-  try {
-    if (!playing) {
-      await bgm.play();
-      playing = true;
-      musicBtn.textContent = "暂停音乐 ⏸";
-    } else {
-      bgm.pause();
-      playing = false;
-      musicBtn.textContent = "播放浪漫音乐 🎵";
-    }
-  } catch(e) {
-    console.log('播放受限，需要用户交互。');
+
+function syncState(){
+  if(playing){
+    audioControl.classList.add('playing');
+  } else {
+    audioControl.classList.remove('playing');
   }
-});
+}
+async function playMusic(){
+  try { await bgm.play(); playing=true; syncState(); } catch(e){ /* 忽略 */ }
+}
+function pauseMusic(){ bgm.pause(); playing=false; syncState(); }
+audioControl.addEventListener('click',()=>{ playing?pauseMusic():playMusic(); });
+window.addEventListener('DOMContentLoaded',()=>{ setTimeout(playMusic, 600); const once=()=>{ if(!playing) playMusic(); document.removeEventListener('click', once); document.removeEventListener('touchstart', once); }; document.addEventListener('click', once, { once:true }); document.addEventListener('touchstart', once, { once:true }); });
+bgm.addEventListener('pause',()=>{ playing=false; syncState(); });
+bgm.addEventListener('play',()=>{ playing=true; syncState(); });
 
 // 为打字光标添加闪烁
 const styleExtra = document.createElement('style');

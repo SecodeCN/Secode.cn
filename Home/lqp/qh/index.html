@@ -43,9 +43,11 @@
     <p id="feedback"></p>
   </section>
 
-  <div class="audio-control">
-    <button id="musicBtn" class="btn tiny">播放浪漫音乐 🎵</button>
-    <audio id="bgm" src="MarryYou.mp3" preload="auto"></audio>
+  <div class="audio-control" id="musicPanel" role="button" aria-label="播放或暂停音乐" title="点击播放/暂停">
+    <div class="eq" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <audio id="bgm" src="MarryYou.mp3" preload="auto" autoplay loop></audio>
   </div>
 
   <footer>© 永远属于我们的此刻</footer>
