@@ -40,6 +40,7 @@ html {
     padding: 0;
     height: 100%;
     color: var(--text);
+    overflow-x: hidden;
 }
 
 body {
@@ -111,7 +112,66 @@ canvas#bg {
     max-width: 860px;
     margin: auto;
     padding: 40px 26px 120px;
+    opacity: 0;
+    transform: translateY(28px) scale(.96);
+    transition: opacity .9s ease, transform 1.1s cubic-bezier(.16,.7,.3,1);
 }
+.container.page-entered {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* 进入覆盖层 */
+#introOverlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.25), rgba(0,0,0,0.65));
+    backdrop-filter: blur(10px) brightness(1.15);
+    z-index: 11;
+    animation: overlayHold 2.6s ease forwards;
+}
+#introOverlay.fade-out { animation: overlayFade .9s ease forwards; }
+
+.intro-inner { text-align: center; position: relative; }
+.intro-heart {
+        font-size: clamp(2.4rem,9vw,4.2rem);
+        animation: heartPulseStart 2.2s ease-in-out infinite, heartSheen 6s linear infinite;
+        background: radial-gradient(circle at 35% 35%, #fff6 0%, rgba(255,255,255,0) 38%),
+                                linear-gradient(115deg, #ff2f70 0%, #ff6fa8 35%, #ffcf4f 55%, #ff6fa8 72%, #ff2f70 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        filter: drop-shadow(0 8px 22px rgba(255,79,154,.55)) drop-shadow(0 0 18px rgba(255,120,170,.35));
+}
+
+@keyframes heartSheen {
+    0% { filter: drop-shadow(0 8px 22px rgba(255,79,154,.55)) drop-shadow(0 0 14px rgba(255,120,170,.3)); }
+    50% { filter: drop-shadow(0 8px 26px rgba(255,79,154,.75)) drop-shadow(0 0 22px rgba(255,180,120,.45)); }
+    100% { filter: drop-shadow(0 8px 22px rgba(255,79,154,.55)) drop-shadow(0 0 14px rgba(255,120,170,.3)); }
+}
+.intro-text {
+    margin: 14px 0 6px;
+    font-size: clamp(2.1rem,6.2vw,3.2rem);
+    letter-spacing: 4px;
+    background: linear-gradient(90deg,var(--accent),var(--accent2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: textReveal 1.4s ease forwards;
+    opacity: 0;
+}
+.intro-sub { margin: 0; font-size: .95rem; letter-spacing: 3px; opacity: 0; animation: subReveal 1.8s ease forwards .6s; }
+
+@keyframes heartPulseStart {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.18); }
+}
+@keyframes textReveal { 0% { opacity:0; transform: translateY(16px);} 65%{opacity:1; transform: translateY(-4px);} 100% {opacity:1; transform: translateY(0);} }
+@keyframes subReveal { 0% {opacity:0; transform: translateY(12px);} 60% {opacity:.9;} 100% {opacity:1; transform: translateY(0);} }
+@keyframes overlayHold { 0% { opacity:1; } 100% { opacity:1; } }
+@keyframes overlayFade { 0% { opacity:1; } 100% { opacity:0; visibility:hidden; } }
+
 
 h1,
 h2 {

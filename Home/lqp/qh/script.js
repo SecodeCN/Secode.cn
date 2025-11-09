@@ -61,6 +61,7 @@ const thinkResponses = [
 
 const tw = document.getElementById('typewriter');
 let iLine = 0, iChar = 0;
+let typewriterStarted = false;
 
 function typeLoop() {
     if (iLine < lines.length) {
@@ -79,7 +80,7 @@ function typeLoop() {
         tw.innerHTML = lines.map(l => `<div>${l}</div>`).join('');
     }
 }
-typeLoop();
+function startTypewriter(){ if(!typewriterStarted){ typewriterStarted = true; typeLoop(); } }
 
 function renderReasons() {
     const ul = document.getElementById('reasonList');
@@ -348,6 +349,24 @@ function updateDaysTogether() {
     span.textContent = days;
 }
 updateDaysTogether();
+
+// 页面进入动画逻辑
+(function initEntry(){
+    const overlay = document.getElementById('introOverlay');
+    const container = document.querySelector('.container');
+    if(!container){ startTypewriter(); return; }
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            if(overlay){
+                overlay.classList.add('fade-out');
+                overlay.addEventListener('animationend', () => { overlay.remove(); startTypewriter(); }, { once:true });
+            } else {
+                startTypewriter();
+            }
+            container.classList.add('page-entered');
+        }, 2300);
+    });
+})();
 
 function pickYesResponse() { return yesResponses[Math.floor(Math.random() * yesResponses.length)]; }
 function pickThinkResponse() { return thinkResponses[Math.floor(Math.random() * thinkResponses.length)]; }
