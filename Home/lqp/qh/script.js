@@ -225,3 +225,17 @@ styleExtra.textContent = `.caret{display:inline-block;width:10px;animation:blink
 @keyframes blink {0%,50%{opacity:1;}51%,100%{opacity:0;}}
 .confetti{pointer-events:none;}`;
 document.head.appendChild(styleExtra);
+
+// 日夜主题自动切换（早晨 8-17 点为日间，其余为夜间）
+function applyTimeTheme(){
+  const hour = new Date().getHours();
+  const body = document.body;
+  const target = (hour >= 8 && hour < 17) ? 'theme-day' : 'theme-night';
+  if(!body.classList.contains(target)){
+    body.classList.remove('theme-day','theme-night');
+    body.classList.add(target);
+  }
+}
+applyTimeTheme();
+// 每小时重新评估（节省资源：设置间隔）
+setInterval(applyTimeTheme, 60 * 60 * 1000);
