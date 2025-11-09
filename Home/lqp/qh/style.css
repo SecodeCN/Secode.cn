@@ -117,6 +117,12 @@ h1,h2 { margin:0 0 18px; letter-spacing:1px; }
   color:#fff; font-size:.6rem; padding:3px 7px 2px; border-radius:8px; letter-spacing:.5px;
   box-shadow:0 2px 6px -2px rgba(0,0,0,.5);
 }
+.step.latest span {
+  background:none; /* 去除渐变，提升可读性 */
+  -webkit-background-clip:initial;
+  color:#fff; /* 纯白文字在彩色边框内更清晰 */
+  text-shadow:0 2px 6px rgba(0,0,0,.55), 0 0 12px rgba(255,79,154,.4);
+}
 .step span {
   display:inline-block;
   font-weight:600;
@@ -226,7 +232,13 @@ footer { text-align:center; margin-top:70px; opacity:.6; font-size:.75rem; }
   position:relative;
   overflow:hidden;
 }
-.modal-content h3 { font-size:1.9rem; letter-spacing:1px; margin-top:0; background:linear-gradient(90deg,var(--accent),var(--accent2)); -webkit-background-clip:text; color:transparent; }
+.modal-content h3 {
+  font-size:1.9rem; letter-spacing:1px; margin-top:0;
+  color:#fff; /* 实色提高可读性 */
+  position:relative;
+  text-shadow:0 2px 6px rgba(0,0,0,.6),0 0 14px rgba(255,79,154,.45);
+}
+.modal-content h3:after { content:""; position:absolute; left:50%; bottom:-10px; width:140px; height:4px; transform:translateX(-50%); border-radius:3px; background:linear-gradient(90deg,var(--accent),var(--accent2)); box-shadow:0 0 10px rgba(255,79,154,.5); }
 .modal-content p { font-size:1.05rem; line-height:1.55; margin:18px 0 26px; }
 .modal-content .btn { animation:pulseGlow 5s ease-in-out infinite; }
 .modal-content:before, .modal-content:after {
@@ -241,7 +253,12 @@ footer { text-align:center; margin-top:70px; opacity:.6; font-size:.75rem; }
 .modal-hearts .modal-heart { transform-origin:center; }
 .modal-hearts.audio-react .modal-heart { animation-name:heartFloat; }
 .days-info { font-size:.85rem; letter-spacing:1px; opacity:.85; margin-bottom:18px; }
-.days-info span { font-weight:600; color:var(--accent); }
+.days-info span {
+  font-weight:700;
+  color:#fff;
+  padding:4px 10px 3px;
+  letter-spacing:.5px;
+}
 .ring-wrap { position:absolute; top:-30px; left:50%; transform:translateX(-50%); width:160px; height:160px; pointer-events:none; }
 .ring { width:100%; height:100%; filter:drop-shadow(0 0 12px rgba(255,79,154,.6)); animation:ringSpin 18s linear infinite; }
 .ring-outline { fill:none; stroke:linear-gradient(90deg,var(--accent),var(--accent2)); stroke:url(#gradRing); }
