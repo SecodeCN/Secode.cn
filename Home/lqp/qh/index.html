@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>Will You Marry Me?</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<canvas id="bg"></canvas>
+
+<div class="container">
+  <h1 id="title" class="gradient-text">亲爱的巧平，</h1>
+  <div id="typewriter"></div>
+
+  <section class="reasons">
+    <h2>我想和你共度一生的理由</h2>
+    <ul id="reasonList">
+      <li>你的笑容是我每天的太阳。</li>
+      <li>你专注时的侧脸让我心跳加速。</li>
+      <li>无论我多晚回家，你的关心从不缺席。</li>
+      <li>你让我成为更好的人。</li>
+      <li>未来的每个清晨，我都想第一眼看到你。</li>
+    </ul>
+  </section>
+
+  <section class="timeline">
+    <h2>我们的旅程</h2>
+    <div class="steps">
+      <div class="step"><span>第一次相遇</span><p>那天的光都在你眼里。</p></div>
+      <div class="step"><span>第一次牵手</span><p>掌心的温度让我确定。</p></div>
+      <div class="step"><span>第一次旅行</span><p>世界很大，和你在一起刚刚好。</p></div>
+      <div class="step"><span>此刻</span><p>我准备好迈向永远。</p></div>
+    </div>
+  </section>
+
+  <section class="proposal">
+    <h2>你愿意嫁给我吗？💍</h2>
+    <div class="actions">
+      <button id="yesBtn" class="btn primary">我愿意</button>
+      <button id="thinkBtn" class="btn ghost">再想想</button>
+    </div>
+    <p id="feedback"></p>
+  </section>
+
+  <div class="audio-control">
+    <button id="musicBtn" class="btn tiny">播放浪漫音乐 🎵</button>
+    <audio id="bgm" src="MarryYou.mp3" preload="auto"></audio>
+  </div>
+
+  <footer>© 永远属于我们的此刻</footer>
+</div>
+
+<div id="modal" class="modal hidden">
+  <div class="modal-content">
+    <h3>谢谢你答应我 ❤️</h3>
+    <p>从这一刻起，我们一起写下新的篇章。</p>
+    <button id="closeModal" class="btn primary tiny">拥抱未来</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
