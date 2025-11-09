@@ -185,6 +185,7 @@ yesBtn.addEventListener('click', () => {
 
 thinkBtn.addEventListener('click', () => {
   feedback.textContent = pickThinkResponse();
+  renderReasons(); // 刷新随机理由列表
   wiggle(thinkBtn);
 });
 
