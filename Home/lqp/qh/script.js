@@ -56,6 +56,11 @@ function renderReasons(){
   const picked = arr.slice(0,5);
   ul.innerHTML = picked.map(r => `<li>${r}</li>`).join('');
 }
+  // 弹窗标题候选（随机择一）
+  const modalHeadings = [
+    '我们一起开启永远 ❤️','从现在起携手到老 ❤️','这一刻开始写下我们的长篇 ❤️','把余生交给彼此守护 ❤️','未来的日子请多指教 ❤️','两个人的故事继续升级 ❤️','愿意与我共赴漫长光景吗 ❤️','此后风景都与你分享 ❤️','小家序章正式开始 ❤️','答应的瞬间记在心里 ❤️','愿把所有清晨和夜晚给你 ❤️'
+  ];
+  function pickModalHeading(){ return modalHeadings[Math.floor(Math.random()*modalHeadings.length)]; }
 renderReasons();
 
 // 可动态添加理由并自动重新随机（保留原数据）
@@ -180,7 +185,12 @@ const closeModal = document.getElementById('closeModal');
 yesBtn.addEventListener('click', () => {
   feedback.textContent = pickYesResponse();
   launchConfetti();
-  setTimeout(()=> { modal.classList.remove('hidden'); startModalHearts(); }, 900);
+  setTimeout(()=> { 
+    const h3 = modal.querySelector('.modal-content h3');
+    if(h3) h3.textContent = pickModalHeading();
+    modal.classList.remove('hidden');
+    startModalHearts();
+  }, 900);
 });
 
 thinkBtn.addEventListener('click', () => {
