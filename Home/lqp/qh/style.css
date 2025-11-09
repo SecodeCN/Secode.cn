@@ -122,6 +122,7 @@ h2 {
 .gradient-text {
     background: linear-gradient(90deg, var(--accent), var(--accent2));
     -webkit-background-clip: text;
+    background-clip: text;
     color: transparent;
     font-size: clamp(2.2rem, 6vw, 3.6rem);
 }
@@ -154,27 +155,187 @@ h2 {
     list-style: none;
     padding: 0;
     margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px 22px;
 }
 
 .reasons li {
-    margin: 10px 0;
-    padding-left: 28px;
+    margin: 0;
+    padding: 12px 16px 12px 34px;
     position: relative;
+    line-height: 1.45;
+    background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    transition: .45s cubic-bezier(.16,.7,.3,1);
+    overflow: hidden;
+    animation: reasonIn .8s ease forwards;
+    opacity: 0;
 }
 
 .reasons li:before {
     content: "❤";
     position: absolute;
     left: 0;
-    top: 0;
-    color: var(--accent);
-    font-size: 1.1rem;
-    animation: pulse 2.4s infinite;
+    top: 8px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: .95rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: initial;
+    background-clip: initial;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px -4px rgba(0,0,0,.55), 0 0 0 4px rgba(255,79,154,.35);
+    animation: pulseGlow 5s ease-in-out infinite;
+}
+
+.reasons li:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255,255,255,0.45);
+    box-shadow: 0 10px 26px -10px rgba(0,0,0,.55), 0 0 0 4px rgba(255,79,154,.25);
+}
+
+/* 渐进入场延迟 */
+.reasons li:nth-child(1) { animation-delay: .05s; }
+.reasons li:nth-child(2) { animation-delay: .10s; }
+.reasons li:nth-child(3) { animation-delay: .15s; }
+.reasons li:nth-child(4) { animation-delay: .20s; }
+.reasons li:nth-child(5) { animation-delay: .25s; }
+.reasons li:nth-child(6) { animation-delay: .30s; }
+
+@keyframes reasonIn {
+    0% { opacity: 0; transform: translateY(18px) scale(.95); }
+    60% { opacity: 1; transform: translateY(-3px) scale(1.01); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* 标题增强 */
+.reasons h2 {
+    position: relative;
+    text-align: center;
+    font-size: clamp(1.9rem, 5vw, 2.5rem);
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    padding: 4px 4px 20px;
+    margin: 0 0 22px;
+    text-shadow: 0 2px 10px rgba(0,0,0,.25), 0 0 16px rgba(255,79,154,.35);
+}
+.reasons h2:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 4px;
+    width: 120px;
+    height: 3px;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 3px;
+    box-shadow: 0 0 12px rgba(255,79,154,.55);
+}
+.reasons h2:before {
+    content: "";
+    position: absolute;
+    inset: -18px -30px -4px;
+    background: radial-gradient(circle at 50% 36%, rgba(255,255,255,0.16), transparent 70%);
+    filter: blur(26px);
+    opacity: .55;
+    pointer-events: none;
+}
+
+@media (max-width:640px) {
+    .reasons ul { grid-template-columns: 1fr; gap: 12px; }
+    .reasons li { padding: 12px 14px 12px 34px; }
+    .reasons h2 { font-size: clamp(1.7rem, 8vw, 2.2rem); }
 }
 
 .timeline .steps {
     display: grid;
     gap: 18px;
+    position: relative;
+    margin-top: 34px;
+    padding-left: 26px; /* 留出竖线与圆点空间 */
+}
+
+/* 时间轴标题增强 */
+.timeline h2 {
+    position: relative;
+    text-align: center;
+    font-size: clamp(1.9rem, 5vw, 2.6rem);
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    padding: 6px 4px 18px;
+    margin-bottom: 4px;
+    text-shadow: 0 2px 10px rgba(0,0,0,.25), 0 0 18px rgba(255,79,154,.35);
+}
+.timeline h2:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 6px;
+    width: 140px;
+    height: 3px;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 3px;
+    box-shadow: 0 0 12px rgba(255,79,154,.5);
+}
+.timeline h2:before {
+    content: "";
+    position: absolute;
+    inset: -20px -30px -10px;
+    background: radial-gradient(circle at 50% 35%, rgba(255,255,255,0.18), transparent 70%);
+    filter: blur(24px);
+    opacity: .55;
+    pointer-events: none;
+}
+
+/* 竖向主线 */
+.timeline .steps:before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--accent), var(--accent2));
+    border-radius: 3px;
+    opacity: .85;
+}
+
+/* 节点圆点 */
+.timeline .step:before {
+    content: "";
+    position: absolute;
+    left: -26px;
+    top: 20px;
+    width: 14px;
+    height: 14px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(255,79,154,.25), 0 4px 10px -4px rgba(0,0,0,.6);
+}
+.timeline .step.latest:before {
+    animation: pulseGlow 4.5s ease-in-out infinite;
+    box-shadow: 0 0 0 5px rgba(255,79,154,.4), 0 0 14px rgba(255,79,154,.7), 0 4px 10px -4px rgba(0,0,0,.6);
+}
+
+@media (max-width:640px) {
+    .timeline .steps { padding-left: 20px; }
+    .timeline .steps:before { left: 6px; }
+    .timeline .step:before { left: -22px; }
+    .timeline h2 { font-size: clamp(1.8rem, 7vw, 2.3rem); }
 }
 
 .step {
@@ -224,6 +385,7 @@ h2 {
     background: none;
     /* 去除渐变，提升可读性 */
     -webkit-background-clip: initial;
+    background-clip: initial;
     color: #fff;
     /* 纯白文字在彩色边框内更清晰 */
     text-shadow: 0 2px 6px rgba(0, 0, 0, .55), 0 0 12px rgba(255, 79, 154, .4);
@@ -235,6 +397,7 @@ h2 {
     margin-bottom: 4px;
     background: linear-gradient(90deg, var(--accent), var(--accent2));
     -webkit-background-clip: text;
+    background-clip: text;
     color: transparent;
 }
 
