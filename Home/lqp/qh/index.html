@@ -54,12 +54,36 @@
         <div class="modal-content">
             <div class="modal-hearts" id="modalHearts"></div>
             <div class="ring-wrap" aria-hidden="true">
-                <svg class="ring" viewBox="0 0 120 120">
-                    <circle cx="60" cy="60" r="34" stroke-width="6" class="ring-outline" />
-                    <g class="diamond" transform="translate(60 22)">
-                        <polygon points="0,-16 14,-4 8,12 -8,12 -14,-4" />
-                    </g>
-                </svg>
+                    <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="gradRing" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#ffe5f6" />
+                                <stop offset="45%" stop-color="#ffb7d8" />
+                                <stop offset="80%" stop-color="#ffc34f" />
+                            </linearGradient>
+                            <linearGradient id="gradDiamond" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#fff9f4" />
+                                <stop offset="40%" stop-color="#ffe0fa" />
+                                <stop offset="100%" stop-color="#ffd5b4" />
+                            </linearGradient>
+                        </defs>
+                        <!-- 戒环 -->
+                        <circle cx="60" cy="60" r="34" stroke-width="8" class="ring-outline" />
+                        <!-- 钻石主体 -->
+                        <g class="diamond" transform="translate(60 24)">
+                            <polygon class="facet facet-top" points="0,-18 16,-6 0,0 -16,-6" />
+                            <polygon class="facet facet-left" points="-16,-6 0,0 -6,14 -18,8" />
+                            <polygon class="facet facet-right" points="16,-6 18,8 6,14 0,0" />
+                            <polygon class="facet facet-bottom" points="-6,14 0,20 6,14 0,0" />
+                        </g>
+                        <!-- 闪光粒子 -->
+                        <g class="sparkles">
+                            <circle cx="38" cy="34" r="2" />
+                            <circle cx="82" cy="30" r="1.8" />
+                            <circle cx="72" cy="88" r="2.2" />
+                            <circle cx="44" cy="90" r="1.6" />
+                        </g>
+                    </svg>
             </div>
             <h3>我们一起开启永远 ❤️</h3>
             <p>从这一刻起，我们一起写下新的篇章。</p>
