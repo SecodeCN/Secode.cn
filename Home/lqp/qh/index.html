@@ -1,65 +1,68 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
-<meta charset="UTF-8" />
-<title>Will You Marry Me?</title>
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <title>Will You Marry Me?</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-<canvas id="bg"></canvas>
+    <canvas id="bg"></canvas>
 
-<div class="container">
-  <h1 id="title" class="gradient-text">亲爱的巧平，</h1>
-  <div id="typewriter"></div>
+    <div class="container">
+        <h1 id="title" class="gradient-text">亲爱的巧平，</h1>
+        <div id="typewriter"></div>
 
-  <section class="timeline">
-    <h2>我们的旅程</h2>
-  <div class="steps" id="timelineSteps"></div>
-  </section>
+        <section class="timeline">
+            <h2>我们的旅程</h2>
+            <div class="steps" id="timelineSteps"></div>
+        </section>
 
-  <section class="reasons">
-    <h2>我想和你共度一生的理由</h2>
-  <ul id="reasonList"></ul>
-  </section>
+        <section class="reasons">
+            <h2>我想和你共度一生的理由</h2>
+            <ul id="reasonList"></ul>
+        </section>
 
-  <section class="proposal">
-    <h2>你愿意嫁给我吗？💍</h2>
-    <div class="actions">
-      <button id="yesBtn" class="btn primary">我愿意</button>
-      <button id="thinkBtn" class="btn ghost">再想想</button>
+        <section class="proposal">
+            <h2>你愿意嫁给我吗？💍</h2>
+            <div class="actions">
+                <button id="yesBtn" class="btn primary">我愿意</button>
+                <button id="thinkBtn" class="btn ghost">再想想</button>
+            </div>
+            <p id="feedback"></p>
+        </section>
+
+        <div class="audio-control" id="musicPanel" role="button" aria-label="播放或暂停音乐" title="点击播放/暂停">
+            <div class="eq" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <audio id="bgm" src="MarryYou.mp3" preload="auto" autoplay loop></audio>
+        </div>
+
+        <footer>© 永远属于我们的此刻</footer>
     </div>
-    <p id="feedback"></p>
-  </section>
 
-  <div class="audio-control" id="musicPanel" role="button" aria-label="播放或暂停音乐" title="点击播放/暂停">
-    <div class="eq" aria-hidden="true">
-      <span></span><span></span><span></span><span></span><span></span>
+    <div id="modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-hearts" id="modalHearts"></div>
+            <div class="ring-wrap" aria-hidden="true">
+                <svg class="ring" viewBox="0 0 120 120">
+                    <circle cx="60" cy="60" r="34" stroke-width="6" class="ring-outline" />
+                    <g class="diamond" transform="translate(60 22)">
+                        <polygon points="0,-16 14,-4 8,12 -8,12 -14,-4" />
+                    </g>
+                </svg>
+            </div>
+            <h3>我们一起开启永远 ❤️</h3>
+            <p>从这一刻起，我们一起写下新的篇章。</p>
+            <div class="days-info">我们已经一起走过 <span id="daysTogether">0</span> 天</div>
+            <button id="closeModal" class="btn primary tiny">拥抱未来</button>
+        </div>
     </div>
-    <audio id="bgm" src="MarryYou.mp3" preload="auto" autoplay loop></audio>
-  </div>
 
-  <footer>© 永远属于我们的此刻</footer>
-</div>
-
-<div id="modal" class="modal hidden">
-  <div class="modal-content">
-  <div class="modal-hearts" id="modalHearts"></div>
-    <div class="ring-wrap" aria-hidden="true">
-      <svg class="ring" viewBox="0 0 120 120">
-        <circle cx="60" cy="60" r="34" stroke-width="6" class="ring-outline" />
-        <g class="diamond" transform="translate(60 22)">
-          <polygon points="0,-16 14,-4 8,12 -8,12 -14,-4" />
-        </g>
-      </svg>
-    </div>
-  <h3>我们一起开启永远 ❤️</h3>
-    <p>从这一刻起，我们一起写下新的篇章。</p>
-    <div class="days-info">我们已经一起走过 <span id="daysTogether">0</span> 天</div>
-    <button id="closeModal" class="btn primary tiny">拥抱未来</button>
-  </div>
-</div>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>
